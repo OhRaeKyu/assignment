@@ -1,0 +1,9 @@
+export const PALLETS = {
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
+  DARK_GRAY: '#595959',
+  GRAY: '#BFBFBF',
+  LIGHT_GRAY: '#F0F0F0',
+  PINK: '#F25E6B',
+  SKY_BLUE: '#048ABF',
+};
