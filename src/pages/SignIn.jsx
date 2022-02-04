@@ -13,6 +13,7 @@ function SignIn() {
   if (!isLogin()) {
     return (
       <SignInWrap>
+        <h2 className="blind">로그인 페이지</h2>
         <Header />
         <FormHeader>
           <button type="button">구매회원 로그인</button>
@@ -89,6 +90,7 @@ const Form = styled.form`
   }
 
   .btn-login {
+    cursor: pointer;
     padding: 20px 0;
     color: ${PALLETS.WHITE};
     background-color: ${PALLETS.SKY_BLUE};
