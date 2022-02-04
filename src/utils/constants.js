@@ -1,7 +1,7 @@
 export const PALLETS = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
-  DARK_GRAY: '#595959',
+  DARK_GRAY: '#767676',
   GRAY: '#BFBFBF',
   LIGHT_GRAY: '#F0F0F0',
   PINK: '#F25E6B',
