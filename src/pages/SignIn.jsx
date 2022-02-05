@@ -90,7 +90,6 @@ const Form = styled.form`
   }
 
   .btn-login {
-    cursor: pointer;
     padding: 20px 0;
     color: ${PALLETS.WHITE};
     background-color: ${PALLETS.SKY_BLUE};
