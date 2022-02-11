@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { isLogin } from '../utils/isLogin';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,21 @@ import styled from 'styled-components';
 import { PALLETS } from '../utils/constants';
 
 function SignIn() {
+  const buyerMode = useRef(null);
+  const sellerMode = useRef(null);
   const [mode, setMode] = useState('buyer');
+
+  const toggleMode = (e) => {
+    e.preventDefault();
+    e.target.classList.add('on');
+    if (e.target.id === 'buyer') {
+      setMode('buyer');
+      sellerMode.current.classList.remove('on');
+    } else {
+      setMode('seller');
+      buyerMode.current.classList.remove('on');
+    }
+  };
 
   if (!isLogin()) {
     return (
@@ -16,19 +30,34 @@ function SignIn() {
         <h2 className="blind">로그인 페이지</h2>
         <Header />
         <FormHeader>
-          <button type="button">구매회원 로그인</button>
-          <button type="button">판매회원 로그인</button>
+          <button
+            type="button"
+            className="on"
+            id="buyer"
+            onClick={toggleMode}
+            ref={buyerMode}
+          >
+            구매회원 로그인
+          </button>
+          <button
+            type="button"
+            onClick={toggleMode}
+            id="seller"
+            ref={sellerMode}
+          >
+            판매회원 로그인
+          </button>
         </FormHeader>
         <Form method="post">
           <label className="blind">아이디</label>
           <input type="text" required placeholder="아이디" />
           <label className="blind">비밀번호</label>
           <input type="password" required placeholder="비밀번호" />
-          {/* <strong>{res.error}</strong> */}
+          {/* <strong className="error">{res.error}</strong> */}
           <strong className="error">
             아이디 또은 비밀번호가 일치하지 않습니다.
           </strong>
-          <button type="submit" className="btn-login">
+          <button type="button" className="btn-login">
             로그인
           </button>
         </Form>
@@ -56,13 +85,13 @@ const FormHeader = styled.div`
     box-sizing: border-box;
     width: 275px;
     height: 60px;
+    background-color: ${PALLETS.LIGHT_GRAY};
     border: 1px solid ${PALLETS.GRAY};
-    border-bottom: none;
     border-radius: 10px 10px 0 0;
 
-    &:nth-child(2) {
-      border-bottom: 1px solid ${PALLETS.GRAY};
-      background-color: ${PALLETS.LIGHT_GRAY};
+    &.on {
+      background-color: inherit;
+      border-bottom: none;
     }
   }
 `;
