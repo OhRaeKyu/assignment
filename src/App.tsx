@@ -1,4 +1,9 @@
+import { useCallback, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import axios from '@/api/axios';
+
+import { setAccessData } from './modules/accessModule';
 
 import AccessUser from './container/AccessUser';
 import AccessNum from './container/AccessNum';
@@ -9,7 +14,23 @@ import ReferralTable from './container/ReferralTable';
 import COLOR from './utils/color';
 
 export default function App() {
-  return (
+  const dispath = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const getAccessData = useCallback(async () => {
+    await axios('event_1.json')
+      .then((res) => {
+        dispath(setAccessData(res.data.data.rows));
+        setLoading(true);
+      })
+      .catch((err) => console.log(err));
+  }, [dispath]);
+
+  useEffect(() => {
+    getAccessData();
+  }, [getAccessData]);
+
+  return loading ? (
     <AppWrap>
       <BaschBoardWrap>
         <AccessUser />
@@ -19,6 +40,8 @@ export default function App() {
         <ReferralTable />
       </BaschBoardWrap>
     </AppWrap>
+  ) : (
+    <Loading>Loading...</Loading>
   );
 }
 
@@ -34,4 +57,9 @@ const BaschBoardWrap = styled.section`
   margin: 0 auto;
   padding: 10px;
   background-color: ${COLOR.GRAY};
+`;
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
 `;

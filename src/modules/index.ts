@@ -3,7 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { accessReducer } from './accessModule';
 
 const rootReducer = combineReducers({
-  accessReducer,
+  access: accessReducer,
 });
 
 export default rootReducer;

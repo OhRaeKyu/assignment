@@ -5,13 +5,9 @@ export const setAccessData = (data: string[][]) => ({
   payload: data,
 });
 
-interface InitState {
-  access: string[][];
-}
+type InitState = string[][];
 
-const initState = {
-  access: [],
-} as InitState;
+const initState = [] as InitState;
 
 type AccessAction = ReturnType<typeof setAccessData>;
 
@@ -21,7 +17,7 @@ export const accessReducer = (
 ) => {
   switch (action.type) {
     case SET_ACCESS_DATA:
-      return { ...state, ...action.payload };
+      return action.payload;
     default:
       return state;
   }
