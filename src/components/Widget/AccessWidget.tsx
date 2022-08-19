@@ -69,7 +69,6 @@ const Total = styled.p`
 const Difference = styled.p<{ difference: number }>`
   position: relative;
   color: ${(props) => (props.difference >= 0 ? COLOR.RED : COLOR.BLUE)};
-  margin-bottom: 15px;
   padding-left: 25px;
 
   &::before {

@@ -11,7 +11,7 @@ interface Props {
   title: string;
   widthSize?: number;
   heightSize?: number;
-  setDate: Dispatch<SetStateAction<string>>;
+  setDate?: Dispatch<SetStateAction<string>>;
 }
 
 export default function Widget({
@@ -28,16 +28,20 @@ export default function Widget({
   return (
     <WidgetWrap width={widthSize} height={heightSize}>
       <WidgetTitle>{title}</WidgetTitle>
-      <label htmlFor="inpDate" className="blind">
-        날짜 설정
-      </label>
-      <DateBtn
-        id="inpDate"
-        type="date"
-        min={getMinDate(dateList)}
-        max={getMaxDate(dateList)}
-        onChange={(e) => setDate(e.target.value)}
-      />
+      {setDate && (
+        <>
+          <label htmlFor="inpDate" className="blind">
+            날짜 설정
+          </label>
+          <DateBtn
+            id="inpDate"
+            type="date"
+            min={getMinDate(dateList)}
+            max={getMaxDate(dateList)}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </>
+      )}
       {children}
     </WidgetWrap>
   );
@@ -46,14 +50,15 @@ export default function Widget({
 const WidgetWrap = styled.article<{ width?: number; height?: number }>`
   box-sizing: border-box;
   position: relative;
-  // dnd 적용 시 수정
-  // display: inline-block;
-  margin-top: 20px;
   width: ${(props) => (props.width ? `${props.width}px` : 'auto')};
-  height: ${(props) => (props.height ? `${props.height}px` : 'auto')};
+  height: ${(props) => (props.height ? `${props.height}px` : 'min-content')};
   padding: 15px;
   background-color: ${COLOR.WHITE};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+  &:nth-child(3) {
+    grid-column: 1/3;
+  }
 `;
 
 const WidgetTitle = styled.h2`

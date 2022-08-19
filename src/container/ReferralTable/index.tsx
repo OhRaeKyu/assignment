@@ -1,5 +1,6 @@
 import React from 'react';
+import Widget from '@/components/Widget';
 
 export default function ReferralTable() {
-  return <div>ReferralTable</div>;
+  return <Widget title="TopReferral">ReferralTable</Widget>;
 }

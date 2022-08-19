@@ -3,7 +3,7 @@ import { useSelector } from '@/hooks/useTypedSelector';
 
 import { getMaxDate, getYesterday } from '@/utils/getDate';
 
-import VisitCountWidget from '@/components/Widget/AccessWidget';
+import AccessWidget from '@/components/Widget/AccessWidget';
 
 export default function AccessNum() {
   const accessData = useSelector((state) => state.access);
@@ -25,7 +25,7 @@ export default function AccessNum() {
   const difference = uniqueEvent - yesterUniqueEvent;
 
   return (
-    <VisitCountWidget
+    <AccessWidget
       title="접속횟수"
       eventCount={uniqueEvent}
       difference={difference}

@@ -12,6 +12,8 @@ import ReferralChart from './container/ReferralChart';
 import ReferralTable from './container/ReferralTable';
 
 import COLOR from './utils/color';
+import { setReferralData } from './modules/referralModule';
+import { setCountryData } from './modules/countryModule';
 
 export default function App() {
   const dispath = useDispatch();
@@ -20,7 +22,25 @@ export default function App() {
   const getAccessData = useCallback(async () => {
     await axios('event_1.json')
       .then((res) => {
-        dispath(setAccessData(res.data.data.rows));
+        const data: string[][] = res.data.data.rows;
+        data.sort(
+          (a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime()
+        );
+        dispath(setAccessData(data));
+      })
+      .catch((err) => console.log(err));
+
+    await axios('event_3.json')
+      .then((res) => {
+        const data: string[][] = res.data.data.rows;
+        data.sort((a, b) => parseInt(a[1]) - parseInt(b[1]));
+        dispath(setReferralData(data));
+      })
+      .catch((err) => console.log(err));
+
+    await axios('event_4.json')
+      .then((res) => {
+        dispath(setCountryData(res.data.data.rows));
         setLoading(true);
       })
       .catch((err) => console.log(err));
@@ -32,13 +52,13 @@ export default function App() {
 
   return loading ? (
     <AppWrap>
-      <BaschBoardWrap>
+      <DashBoardWrap>
         <AccessUser />
         <AccessNum />
         <DAU />
         <ReferralChart />
         <ReferralTable />
-      </BaschBoardWrap>
+      </DashBoardWrap>
     </AppWrap>
   ) : (
     <Loading>Loading...</Loading>
@@ -46,17 +66,20 @@ export default function App() {
 }
 
 const AppWrap = styled.main`
-  width: 100vw;
+  width: 80vw;
   height: 100vh;
+  margin: 0 auto;
+  background-color: ${COLOR.GRAY};
 `;
 
-const BaschBoardWrap = styled.section`
+const DashBoardWrap = styled.section`
   box-sizing: border-box;
-  width: 80%;
-  height: 100%;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
   padding: 10px;
-  background-color: ${COLOR.GRAY};
+  overflow: hidden;
 `;
 
 const Loading = styled.div`
