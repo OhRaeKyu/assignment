@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useSelector } from '@/hooks/useTypedSelector';
 
 import { getMaxDate } from '@/utils/getDate';
